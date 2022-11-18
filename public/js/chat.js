@@ -1,4 +1,4 @@
-// eslint-disable-next-line no-undef
+/* eslint-disable no-undef */
 const socket = io();
 
 const $messageForm = document.querySelector('#message-form');
@@ -12,14 +12,15 @@ const locationMessageTemplate = document.querySelector('#location-message-templa
 
 socket.on('message', message => {
     console.log(message);
-    // eslint-disable-next-line no-undef
-    const html = Mustache.render(messageTemplate, { message, });
+    const html = Mustache.render(messageTemplate, {
+        message: message.text,
+        createdAt: moment(message.createdAt).format('H:mm a'),
+     });
     $messages.insertAdjacentHTML('beforeend', html);
 });
 
 socket.on('locationMessage', url => {
     console.log(url);
-    // eslint-disable-next-line no-undef
     const html = Mustache.render(locationMessageTemplate, { url, });
     $messages.insertAdjacentHTML('beforeend', html);
 });
