@@ -1,14 +1,19 @@
 /* eslint-disable no-undef */
 const socket = io();
 
+// Elements
 const $messageForm = document.querySelector('#message-form');
 const $messageFormInput = $messageForm.querySelector('input');
 const $messageFormButton = $messageForm.querySelector('button');
 const $sendLocationButton = document.querySelector('#send-location');
 const $messages = document.querySelector('#messages');
 
+// Templates
 const messageTemplate = document.querySelector('#message-template').innerHTML;
 const locationMessageTemplate = document.querySelector('#location-message-template').innerHTML;
+
+// Options
+const { username, room, } = Qs.parse(location.search, { ignoreQueryPrefix: true, });
 
 socket.on('message', message => {
     console.log(message);
@@ -63,3 +68,5 @@ $sendLocationButton.addEventListener('click', () => {
         });
     });
 });
+
+socket.emit('join', { username, room, });
